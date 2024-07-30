@@ -2,18 +2,18 @@
     {
         "displayName": "TESTUSER",
         "trackedQueue": "RANKED_SOLO_5x5",
-        "winstreak": 0,
+        "winstreak": -5,
         "leagueId": "63812ea2-cfef-387b-9ca9-870b7ee60fa6",
         "queueType": "RANKED_SOLO_5x5",
         "tier": "MASTER",
         "rank": "I",
         "summonerId": "vq_yPe_cYJcv62pP1HGRMK0JTLfPQZPqwCGXTFDRZbbVQBJx",
-        "leaguePoints": 458,
-        "wins": 131,
-        "losses": 105,
+        "leaguePoints": 411,
+        "wins": 137,
+        "losses": 113,
         "veteran": true,
         "inactive": false,
         "freshBlood": false,
-        "hotStreak": true
+        "hotStreak": false
     }
 ]
