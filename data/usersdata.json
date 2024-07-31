@@ -1,19 +1,20 @@
 [
     {
-        "displayName": "TESTUSER",
-        "trackedQueue": "RANKED_SOLO_5x5",
-        "winstreak": -5,
-        "leagueId": "63812ea2-cfef-387b-9ca9-870b7ee60fa6",
-        "queueType": "RANKED_SOLO_5x5",
-        "tier": "MASTER",
-        "rank": "I",
-        "summonerId": "vq_yPe_cYJcv62pP1HGRMK0JTLfPQZPqwCGXTFDRZbbVQBJx",
-        "leaguePoints": 411,
-        "wins": 137,
-        "losses": 113,
-        "veteran": true,
-        "inactive": false,
-        "freshBlood": false,
-        "hotStreak": false
+        "displayName": "Manute",
+        "trackedQueue": "TEMP_TFT_LoG",
+        "winstreak": 3,
+        "leagueId": null,
+        "queueType": "TEMP_TFT_LoG",
+        "tier": "GOLD",
+        "rank": "III",
+        "summonerId": "O21j9hUppzW5gjjCgv07Yb37Le7tvCqpYyrjbGRsPn8HLJ8x",
+        "leaguePoints": 85,
+        "wins": null,
+        "losses": null,
+        "veteran": null,
+        "inactive": null,
+        "freshBlood": null,
+        "hotStreak": null,
+        "lastGamePlacement": 4
     }
 ]

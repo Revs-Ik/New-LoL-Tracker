@@ -4,7 +4,7 @@ from conf import DATA_FILE
 import json, os
 
 class User:
-    def __init__(self, displayName: str, trackedQueue: str, winstreak: int, leagueId: str, queueType: str, tier: str, rank: str, summonerId: str, leaguePoints: int, wins: int, losses: int, veteran: bool, inactive: bool, freshBlood: bool, hotStreak: bool):
+    def __init__(self, displayName: str, trackedQueue: str, winstreak: int,  queueType: str, tier: str, rank: str, summonerId: str, leaguePoints: int, leagueId: str = None, wins: int = None, losses: int = None, veteran: bool = None, inactive: bool = None, freshBlood: bool = None, hotStreak: bool = None, lastGamePlacement: int = None):
         self.displayName = displayName # own variable
         self.trackedQueue = trackedQueue # own variable
         self.winstreak = winstreak # own variable
@@ -20,9 +20,41 @@ class User:
         self.inactive = inactive # riot api variable
         self.freshBlood = freshBlood # riot api variable
         self.hotStreak = hotStreak # riot api variable
+        self.lastGamePlacement = lastGamePlacement # nullable?
 
     def check_updates(self) -> 'User':
         """ Returns updated User object without modifiying the original. """
+        # temporal until we get aproved tft api key
+        if self.trackedQueue == "TEMP_TFT_LoG":
+            import requests
+            from bs4 import BeautifulSoup
+            
+            headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"}
+            r = requests.get("https://www.leagueofgraphs.com/tft/summoner/euw/GSNS+Manute-MNT", headers=headers)
+            soup = BeautifulSoup(r.text, "html.parser")
+            
+            combined_rank = soup.find("div", {"class":"leagueTier"}).text.strip().split(" ")
+
+            tier      = combined_rank[0].upper()
+            rank      = combined_rank[1].upper()
+            leaguePoints = int(soup.find("span", {"class":"leaguePoints"}).text.strip())
+            queueType = "TEMP_TFT_LoG"
+            lastGamePlacement = int(soup.find("span", {"class":"placement"}).text.strip())
+
+            return User(
+                    displayName=self.displayName,
+                    trackedQueue=self.trackedQueue,
+                    winstreak=self.winstreak,
+                    queueType=queueType,
+                    tier=tier,
+                    rank=rank,
+                    summonerId=self.summonerId,
+                    leaguePoints=leaguePoints,
+                    lastGamePlacement=lastGamePlacement,
+                )
+            
+
+        # This surely works for RANKED_5X5 but might not work for tft
         json_data = get_user_info(self.summonerId)
         for entry in json_data:
             if entry['queueType'] == self.trackedQueue:
@@ -46,6 +78,7 @@ class User:
                     freshBlood=entry['freshBlood'],
                     hotStreak=entry['hotStreak']
                 )
+                
         return self
     
     def win_rate(self):
@@ -92,21 +125,3 @@ class User:
         return (f"User(displayName={self.displayName}, trackedQueue={self.trackedQueue}, winstreak={self.winstreak}, leagueId={self.leagueId}, queueType={self.queueType}, tier={self.tier}, rank={self.rank}, "
                 f"summonerId={self.summonerId}, leaguePoints={self.leaguePoints}, wins={self.wins}, losses={self.losses}, "
                 f"veteran={self.veteran}, inactive={self.inactive}, freshBlood={self.freshBlood}, hotStreak={self.hotStreak})")
-
-# Example usage
-if __name__ == '__main__':
-    # We get this from riot api
-    user_data = {'leagueId': '63812ea2-cfef-387b-9ca9-870b7ee60fa6', 'queueType': 'RANKED_SOLO_5x5', 'tier': 'MASTER', 'rank': 'I', 'summonerId': 'vq_yPe_cYJcv62pP1HGRMK0JTLfPQZPqwCGXTFDRZbbVQBJx', 'leaguePoints': 458, 'wins': 131, 'losses': 105, 'veteran': True, 'inactive': False, 'freshBlood': False, 'hotStreak': True}
-    
-    # Create a User instance from the data
-    user = User(displayName="TESTUSER", trackedQueue="RANKED_SOLO_5x5", winstreak=0, **user_data)
-
-    # Save the user data to a JSON file
-    file_path = 'data/usersdata.json'
-    user.save_to_json(file_path)
-
-    # Print the User instance
-    print(user)
-
-    # Print the win rate
-    print(f"Win Rate: {user.win_rate()}%")

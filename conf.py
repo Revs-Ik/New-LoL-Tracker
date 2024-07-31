@@ -29,3 +29,6 @@ RANKS = ['IRON IV', 'IRON III', 'IRON II', 'IRON I',
          'DIAMOND IV', 'DIAMOND III', 'DIAMOND II', 'DIAMOND I',
          'MASTER I', 'GRANDMASTER I', 'CHALLENGER I'
         ]
+
+WIN_IMG_DIR = 'data/img/win'
+LOSE_IMG_DIR = 'data/img/lose'
