@@ -28,7 +28,7 @@ def main():
         except Exception as e:
             logger.logLine(message=f"{str(e)}\n Traceback: {traceback.format_exc()}", logFile="error.log")
             
-        time.sleep(400)
+        time.sleep(60)
 
 if __name__ == "__main__":
     main()

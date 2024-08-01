@@ -2,19 +2,19 @@
     {
         "displayName": "Manute",
         "trackedQueue": "TEMP_TFT_LoG",
-        "winstreak": 3,
+        "winstreak": 1,
         "leagueId": null,
         "queueType": "TEMP_TFT_LoG",
-        "tier": "GOLD",
+        "tier": "PLATINUM",
         "rank": "III",
         "summonerId": "O21j9hUppzW5gjjCgv07Yb37Le7tvCqpYyrjbGRsPn8HLJ8x",
-        "leaguePoints": 85,
+        "leaguePoints": 26,
         "wins": null,
         "losses": null,
         "veteran": null,
         "inactive": null,
         "freshBlood": null,
         "hotStreak": null,
-        "lastGamePlacement": 4
+        "lastGamePlacement": 3
     }
 ]

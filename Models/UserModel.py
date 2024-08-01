@@ -30,22 +30,14 @@ class User:
             from bs4 import BeautifulSoup
             
             headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"}
-            r = requests.get("https://www.leagueofgraphs.com/tft/summoner/euw/GSNS+Manute-MNT", headers=headers)
-            soup = BeautifulSoup(r.text, "html.parser")
+            r_json = requests.get("https://ap.tft.tools/player/stats/euw1/gsnsmanute/120/50", headers=headers).json()
             
-            combined_rank = soup.find("div", {"class":"leagueTier"}).text.strip().split(" ")
-            leaguePoints = int(soup.find("span", {"class":"leaguePoints"}).text.strip())
-            if leaguePoints != self.leaguePoints:
-                time.sleep(360)
-                r = requests.get("https://www.leagueofgraphs.com/tft/summoner/euw/GSNS+Manute-MNT", headers=headers)
-                soup = BeautifulSoup(r.text, "html.parser")
-                
-            combined_rank = soup.find("div", {"class":"leagueTier"}).text.strip().split(" ")
-            tier      = combined_rank[0].upper()
-            rank      = combined_rank[1].upper()
-            leaguePoints = int(soup.find("span", {"class":"leaguePoints"}).text.strip())
+            combined_rank = r_json["playerInfo"]["rankedLeague"]
+            tier      = combined_rank[0].split(" ")[0].upper().strip()
+            rank      = combined_rank[0].split(" ")[1].upper().strip()
+            leaguePoints = combined_rank[1]
             queueType = "TEMP_TFT_LoG"
-            lastGamePlacement = int(soup.find("span", {"class":"placement"}).text.strip())
+            lastGamePlacement = r_json["matches"][0]["info"]["placement"]
 
             return User(
                     displayName=self.displayName,
