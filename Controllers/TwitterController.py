@@ -152,9 +152,9 @@ class TwitterController:
                 message = f'{parts[0]}\n{parts[1]}\n♿ Loss Streak {winstreak*-1} ♿\n'
             
             # Upload media
-            #media = self.api.media_upload(random_img)
+            media = self.api.media_upload(random_img)
             # Post tweet
-            #tweet = self.client.create_tweet(text=message, media_ids=[media.media_id])
+            tweet = self.client.create_tweet(text=message, media_ids=[media.media_id])
             # Create a reply to the initial tweet
             #self.client.create_tweet(text="kick.com/elmiillor", in_reply_to_tweet_id=tweet.data['id'])
             
