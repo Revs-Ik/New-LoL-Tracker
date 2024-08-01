@@ -35,7 +35,7 @@ class User:
             
             combined_rank = soup.find("div", {"class":"leagueTier"}).text.strip().split(" ")
             leaguePoints = int(soup.find("span", {"class":"leaguePoints"}).text.strip())
-            if leaguePoints != self.trackedQueue:
+            if leaguePoints != self.leaguePoints:
                 time.sleep(360)
                 r = requests.get("https://www.leagueofgraphs.com/tft/summoner/euw/GSNS+Manute-MNT", headers=headers)
                 soup = BeautifulSoup(r.text, "html.parser")
