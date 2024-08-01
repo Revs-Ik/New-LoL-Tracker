@@ -26,7 +26,7 @@ class User:
         """ Returns updated User object without modifiying the original. """
         # temporal until we get aproved tft api key
         if self.trackedQueue == "TEMP_TFT_LoG":
-            import requests
+            import requests, time
             from bs4 import BeautifulSoup
             
             headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"}
@@ -34,7 +34,13 @@ class User:
             soup = BeautifulSoup(r.text, "html.parser")
             
             combined_rank = soup.find("div", {"class":"leagueTier"}).text.strip().split(" ")
-
+            leaguePoints = int(soup.find("span", {"class":"leaguePoints"}).text.strip())
+            if leaguePoints != self.trackedQueue:
+                time.sleep(360)
+                r = requests.get("https://www.leagueofgraphs.com/tft/summoner/euw/GSNS+Manute-MNT", headers=headers)
+                soup = BeautifulSoup(r.text, "html.parser")
+                
+            combined_rank = soup.find("div", {"class":"leagueTier"}).text.strip().split(" ")
             tier      = combined_rank[0].upper()
             rank      = combined_rank[1].upper()
             leaguePoints = int(soup.find("span", {"class":"leaguePoints"}).text.strip())
