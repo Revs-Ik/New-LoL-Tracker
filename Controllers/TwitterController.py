@@ -25,7 +25,7 @@ class TwitterController:
                 output_string += char
 
         return output_string
-    
+
     def check_rank(self, lp_diff, saved_rank, new_rank, winstreak, lost):
         """ Old code reused (sorry) """
         # NO RANK CHANGE (just lp)
@@ -80,41 +80,53 @@ class TwitterController:
                     'winstreak': winstreak,
                     'promo': promo,
                     'demo': demo}
-    
+
     def post_tweet(self, user: User, updated_user: User):
         difference = updated_user.leaguePoints - user.leaguePoints
         # PLEASE CHANGE THIS (once you have api key)
         if updated_user.trackedQueue == "TEMP_TFT_LoG":
-            
+
             if updated_user.lastGamePlacement == None:
                 raise Exception("Something went wrong. lastGamePlacement is None")
-            
+
             if difference < 0: lost = True
             elif difference > 0: lost = False
-            
+
             # old code. Just pass the old variables somehow to obtain the same result (it works so no more modifiying, sorry.)
-            rank_json  = self.check_rank(lp_diff=difference, 
+            rank_json  = self.check_rank(lp_diff=difference,
                                         saved_rank=" ".join([user.tier, user.rank]),
                                         new_rank=" ".join([updated_user.tier, updated_user.rank]),
                                         winstreak=updated_user.winstreak,
                                         lost=lost)
-            
+
             difference = rank_json["difference"]
             winstreak  = rank_json["winstreak"]
             promo      = rank_json["promo"]
             demo       = rank_json["demo"]
-            
+
             # !!!!!!!!!! VERY IMPORTANT !!!!!!!!!!
             # We modify the new winstreak of the updated_user here. It will be stored into json by the main later.
             # (I know this should be done here lol - UPDATE NECESSSARY)
             updated_user.winstreak = winstreak
-            
+
             if updated_user.tier not in ['MASTER', 'GRANDMASTER', 'CHALLENGER']:
                 text = f'{updated_user.tier.capitalize()} {updated_user.rank} {updated_user.leaguePoints} LP'
             else:
                 text = f'{updated_user.tier.capitalize()} {updated_user.leaguePoints} LP'
-                
-            formatted_rank = self.convert_to_fancy_format(text)
+
+            translated_text = (text.replace("Iron", "Hierro")
+                              .replace("Bronze", "Bronce")
+                              .replace("Silver", "Plata")
+                              .replace("Gold", "Oro")
+                              .replace("Platinum", "Platino")
+                              .replace("Emerald", "Esmeralda")
+                              .replace("Diamond", "Diamante")
+                              #.replace("Master", "Maestro")
+                              #.replace("Grandmaster", "Gran Maestro")
+                              #.replace("Challenger", "Aspirante")
+                              )
+            
+            formatted_rank = self.convert_to_fancy_format(translated_text)
             emoji_rand = random.choice(LOSE_EMOJIS)
             random_img = os.path.join(LOSE_IMG_DIR, random.choice(os.listdir(LOSE_IMG_DIR)))
 
@@ -132,7 +144,7 @@ class TwitterController:
                 formatted_diff = self.convert_to_fancy_format(f'{difference} LP')
                 emoji_rand = random.choice(WIN_EMOJIS)
                 random_img = os.path.join(WIN_IMG_DIR, random.choice(os.listdir(WIN_IMG_DIR)))
-                
+
                 if promo:
                     message = f'{updated_user.displayName} ha quedado Top {updated_user.lastGamePlacement}  +{formatted_diff} ✅\nPromo a {formatted_rank} GGS {emoji_rand}\n'
                 else:
@@ -141,56 +153,56 @@ class TwitterController:
             elif difference == 0:
                 emoji_rand = random.choice(NOLP_EMOJIS)
                 message = f'{updated_user.displayName} ha perdido en 0 LP (Top {updated_user.lastGamePlacement}) ❌ \nElo actual {formatted_rank} {emoji_rand}\n'
-                
+
             # ADD WINSTRIAK
             if winstreak > 1 and (difference > 0 or lost):
                 parts = message.split('\n')
                 message = f'{parts[0]}\n{parts[1]}\n🔥 Winstreak {winstreak} 🔥\n'
-                
+
             if winstreak < -1 and (difference > 0 or lost):
                 parts = message.split('\n')
                 message = f'{parts[0]}\n{parts[1]}\n♿ Loss Streak {winstreak*-1} ♿\n'
-            
+
             # Upload media
             media = self.api.media_upload(random_img)
             # Post tweet
             tweet = self.client.create_tweet(text=message, media_ids=[media.media_id])
             # Create a reply to the initial tweet
             #self.client.create_tweet(text="kick.com/elmiillor", in_reply_to_tweet_id=tweet.data['id'])
-            
+
             print(f'Tweet Posted:\n{message}\n')
             Logger().logLine(f'Tweet Posted:\n{message}\n', "activity.log")
             return
-        
+
         # elm old code
         elif False:
             lost = updated_user.losses - user.losses
-        
+
             # old code. Just pass the old variables somehow to obtain the same result (it works so no more modifiying, sorry.)
-            rank_json  = self.check_rank(lp_diff=difference, 
+            rank_json  = self.check_rank(lp_diff=difference,
                                         saved_rank=" ".join([user.tier, user.rank]),
                                         new_rank=" ".join([updated_user.tier, updated_user.rank]),
                                         winstreak=updated_user.winstreak,
                                         lost=lost)
-            
+
             difference = rank_json["difference"]
             winstreak  = rank_json["winstreak"]
             promo      = rank_json["promo"]
             demo       = rank_json["demo"]
-            
+
             # !!!!!!!!!! VERY IMPORTANT !!!!!!!!!!
             # We modify the new winstreak of the updated_user here. It will be stored into json by the main later.
             # (I know this should be done here lol - UPDATE NECESSSARY)
             updated_user.winstreak = winstreak
-            
+
             if updated_user.tier not in ['MASTER', 'GRANDMASTER', 'CHALLENGER']:
                 text = f'{updated_user.tier.capitalize()} {updated_user.rank} {updated_user.leaguePoints} LP'
             else:
                 text = f'{updated_user.tier.capitalize()} {updated_user.leaguePoints} LP'
-                
+
             formatted_rank = self.convert_to_fancy_format(text)
             emoji_rand = random.choice(LOSE_EMOJIS)
-            
+
             # DODGE
             if (difference == -5 or difference == -15) and not lost:
                 formatted_diff = self.convert_to_fancy_format(f'{(difference*-1)} LP')
@@ -209,7 +221,7 @@ class TwitterController:
             elif difference > 0:
                 formatted_diff = self.convert_to_fancy_format(f'{difference} LP')
                 emoji_rand = random.choice(WIN_EMOJIS)
-                
+
                 if promo:
                     message = f'{updated_user.displayName} somehow gained {formatted_diff} ✅\nPROMOTED TO {formatted_rank} GGS {emoji_rand}\n'
                 else:
@@ -218,7 +230,7 @@ class TwitterController:
             elif difference == 0:
                 emoji_rand = random.choice(NOLP_EMOJIS)
                 message = f'{updated_user.displayName} can\'t even lose more lp ❌ \nCurrent rank is {formatted_rank} {emoji_rand}\n'
-                
+
             # ADD WINSTRIAK
             if winstreak > 1 and (difference > 0 or lost):
                 parts = message.split('\n')
@@ -226,12 +238,12 @@ class TwitterController:
             if winstreak < -1 and (difference > 0 or lost):
                 parts = message.split('\n')
                 message = f'{parts[0]}\n{parts[1]}\n♿ Loss Streak {winstreak*-1} ♿\n'
-            
+
             # Upload media
             #media = self.api.media_upload(os.path.join(IMG_DIR, 'elm_banner.png'))
             # Post tweet
             #tweet = self.client.create_tweet(text=message, media_ids=[media.media_id])
             # Create a reply to the initial tweet
             #self.client.create_tweet(text="kick.com/elmiillor", in_reply_to_tweet_id=tweet.data['id'])
-            
+
             print(f'Tweet Posted:\n{message}\n')
