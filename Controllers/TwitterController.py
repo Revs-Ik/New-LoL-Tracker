@@ -106,7 +106,7 @@ class TwitterController:
 
             # !!!!!!!!!! VERY IMPORTANT !!!!!!!!!!
             # We modify the new winstreak of the updated_user here. It will be stored into json by the main later.
-            # (I know this should be done here lol - UPDATE NECESSSARY)
+            # (I know this shouldnt be done here lol - UPDATE NECESSSARY)
             updated_user.winstreak = winstreak
 
             if updated_user.tier not in ['MASTER', 'GRANDMASTER', 'CHALLENGER']:
@@ -150,18 +150,26 @@ class TwitterController:
                 else:
                     message = f'{updated_user.displayName} ha quedado Top {updated_user.lastGamePlacement}  +{formatted_diff} ✅ \nElo actual {formatted_rank} {emoji_rand}\n'
 
+            # 0LP FLOOR LOSE
             elif difference == 0:
                 emoji_rand = random.choice(NOLP_EMOJIS)
                 message = f'{updated_user.displayName} ha perdido en 0 LP (Top {updated_user.lastGamePlacement}) ❌ \nElo actual {formatted_rank} {emoji_rand}\n'
 
+            # CHECK 3 STARTS CHAMPS
+            maxxedLegendaryChamps = []
+            for unit in updated_user.lastMatchData["info"]["units"]:
+                if unit["rarity"] == 6 and unit["tier"] == 3:
+                    maxxedLegendaryChamps.append(f'{unit["id"].split("_")[1]} ⭐⭐⭐')
+                    
+            if difference > 0:
+                message += f'Abusando de {"\nY ".join(maxxedLegendaryChamps)}\n'
+            
             # ADD WINSTRIAK
             if winstreak > 1 and (difference > 0 or lost):
-                parts = message.split('\n')
-                message = f'{parts[0]}\n{parts[1]}\n🔥 Winstreak {winstreak} 🔥\n'
+                message += f'🔥 Winstreak {winstreak} 🔥\n'
 
             if winstreak < -1 and (difference > 0 or lost):
-                parts = message.split('\n')
-                message = f'{parts[0]}\n{parts[1]}\n♿ Loss Streak {winstreak*-1} ♿\n'
+                message += f'♿ Loss Streak {winstreak*-1} ♿\n'
 
             # Upload media
             media = self.api.media_upload(random_img)

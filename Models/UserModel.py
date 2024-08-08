@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
             
 class User:
-    def __init__(self, displayName: str, trackedQueue: str, winstreak: int,  queueType: str, tier: str, rank: str, summonerId: str, leaguePoints: int, leagueId: str = None, wins: int = None, losses: int = None, veteran: bool = None, inactive: bool = None, freshBlood: bool = None, hotStreak: bool = None, lastGamePlacement: int = None, lastMatchId: str = None):
+    def __init__(self, displayName: str, trackedQueue: str, winstreak: int,  queueType: str, tier: str, rank: str, summonerId: str, leaguePoints: int, leagueId: str = None, wins: int = None, losses: int = None, veteran: bool = None, inactive: bool = None, freshBlood: bool = None, hotStreak: bool = None, lastGamePlacement: int = None, lastMatchData: dict = None):
         self.displayName = displayName # own variable
         self.trackedQueue = trackedQueue # own variable
         self.winstreak = winstreak # own variable
@@ -23,8 +23,8 @@ class User:
         self.inactive = inactive # riot api variable
         self.freshBlood = freshBlood # riot api variable
         self.hotStreak = hotStreak # riot api variable
-        self.lastGamePlacement = lastGamePlacement # nullable?
-        self.lastMatchId = lastMatchId # nullable?
+        self.lastGamePlacement = lastGamePlacement # nullable if not tft
+        self.lastMatchData = lastMatchData # nullable if not tft
 
     def check_updates(self) -> 'User':
         """ Returns updated User object without modifiying the original. """
@@ -33,7 +33,7 @@ class User:
             headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"}
             r_json = requests.get("https://ap.tft.tools/player/stats/euw1/gsnsmanute/120/50", headers=headers).json()
 
-            matchId   = r_json["matches"][0]["id"]
+            matchData = r_json["matches"][0]
             combined_rank = r_json["matches"][0]["rankAfter"]
             tier      = combined_rank[0].split(" ")[0].upper().strip()
             rank      = combined_rank[0].split(" ")[1].upper().strip()
@@ -41,7 +41,7 @@ class User:
             queueType = "TEMP_TFT_LoG"
             lastGamePlacement = r_json["matches"][0]["info"]["placement"]
 
-            if matchId != self.lastMatchId:
+            if matchData["id"] != self.lastMatchData["id"]:
                 return User(
                         displayName=self.displayName,
                         trackedQueue=self.trackedQueue,
@@ -52,7 +52,7 @@ class User:
                         summonerId=self.summonerId,
                         leaguePoints=leaguePoints,
                         lastGamePlacement=lastGamePlacement,
-                        lastMatchId=matchId,
+                        lastMatchData=matchData,
                     )
 
 

@@ -2,20 +2,210 @@
     {
         "displayName": "Manute",
         "trackedQueue": "TEMP_TFT_LoG",
-        "winstreak": -1,
+        "winstreak": 2,
         "leagueId": null,
         "queueType": "TEMP_TFT_LoG",
-        "tier": "EMERALD",
-        "rank": "III",
+        "tier": "DIAMOND",
+        "rank": "IV",
         "summonerId": "O21j9hUppzW5gjjCgv07Yb37Le7tvCqpYyrjbGRsPn8HLJ8x",
-        "leaguePoints": 24,
+        "leaguePoints": 43,
         "wins": null,
         "losses": null,
         "veteran": null,
         "inactive": null,
         "freshBlood": null,
         "hotStreak": null,
-        "lastGamePlacement": 3,
-        "lastMatchId": "EUW1_7062915762"
+        "lastGamePlacement": 1,
+        "lastMatchData": {
+            "id": "EUW1_7068956766",
+            "dateTime": 1723140395932,
+            "duration": 2038.2001,
+            "patch": 14150,
+            "queueId": 1100,
+            "info": {
+                "name": "GSNS Manute",
+                "tag": "MNT",
+                "companionId": "9fb1e3ae-2294-4a89-869d-7933fec3fa36",
+                "lastRound": 35,
+                "level": 8,
+                "placement": 1,
+                "playersEliminated": 2,
+                "totalDamageToPlayers": 175,
+                "traits": [
+                    {
+                        "name": "TFT12_Arcana",
+                        "numUnits": 1,
+                        "currentTier": 0
+                    },
+                    {
+                        "name": "TFT12_Blaster",
+                        "numUnits": 1,
+                        "currentTier": 0
+                    },
+                    {
+                        "name": "TFT12_Chrono",
+                        "numUnits": 1,
+                        "currentTier": 0
+                    },
+                    {
+                        "name": "TFT12_Eldritch",
+                        "numUnits": 5,
+                        "currentTier": 2
+                    },
+                    {
+                        "name": "TFT12_Incantor",
+                        "numUnits": 2,
+                        "currentTier": 1
+                    },
+                    {
+                        "name": "TFT12_Mage",
+                        "numUnits": 2,
+                        "currentTier": 0
+                    },
+                    {
+                        "name": "TFT12_Portal",
+                        "numUnits": 1,
+                        "currentTier": 0
+                    },
+                    {
+                        "name": "TFT12_Ravenous",
+                        "numUnits": 1,
+                        "currentTier": 1
+                    },
+                    {
+                        "name": "TFT12_Shapeshifter",
+                        "numUnits": 1,
+                        "currentTier": 0
+                    },
+                    {
+                        "name": "TFT12_Sugarcraft",
+                        "numUnits": 1,
+                        "currentTier": 0
+                    },
+                    {
+                        "name": "TFT12_Vanguard",
+                        "numUnits": 4,
+                        "currentTier": 2
+                    }
+                ],
+                "units": [
+                    {
+                        "id": "TFT12_Syndra",
+                        "items": [
+                            23,
+                            14,
+                            23
+                        ],
+                        "items2": [
+                            "GuinsoosRageblade",
+                            "SpearOfShojin",
+                            "GuinsoosRageblade"
+                        ],
+                        "rarity": 1,
+                        "tier": 3
+                    },
+                    {
+                        "id": "TFT12_Rumble",
+                        "items": [
+                            99,
+                            25,
+                            12
+                        ],
+                        "items2": [
+                            "ThiefsGloves",
+                            "TitansResolve",
+                            "MadredsBloodrazor"
+                        ],
+                        "rarity": 1,
+                        "tier": 2
+                    },
+                    {
+                        "id": "TFT12_Galio",
+                        "items": [],
+                        "items2": [],
+                        "rarity": 1,
+                        "tier": 3
+                    },
+                    {
+                        "id": "TFT12_Mordekaiser",
+                        "items": [
+                            66,
+                            66,
+                            56
+                        ],
+                        "items2": [
+                            "DragonsClaw",
+                            "DragonsClaw",
+                            "GargoyleStoneplate"
+                        ],
+                        "rarity": 2,
+                        "tier": 2
+                    },
+                    {
+                        "id": "TFT12_Karma",
+                        "items": [],
+                        "items2": [],
+                        "rarity": 4,
+                        "tier": 1
+                    },
+                    {
+                        "id": "TFT12_TahmKench",
+                        "items": [
+                            66
+                        ],
+                        "items2": [
+                            "12EldritchEmblemItem",
+                            "DragonsClaw"
+                        ],
+                        "rarity": 4,
+                        "tier": 2
+                    },
+                    {
+                        "id": "TFT12_Nami",
+                        "items": [
+                            12,
+                            24
+                        ],
+                        "items2": [
+                            "MadredsBloodrazor",
+                            "StatikkShiv"
+                        ],
+                        "rarity": 4,
+                        "tier": 2
+                    },
+                    {
+                        "id": "TFT12_Briar",
+                        "items": [],
+                        "items2": [],
+                        "rarity": 6,
+                        "tier": 1
+                    }
+                ],
+                "augments": [
+                    "TFT_Augment_Replication",
+                    "TFT9_Augment_OldMansWalkingStick",
+                    "TFT_Augment_SupportSentinel2"
+                ]
+            },
+            "rankBefore": [
+                "DIAMOND IV",
+                0
+            ],
+            "rankAfter": [
+                "DIAMOND IV",
+                43
+            ],
+            "ratings": {
+                "meta": 0.15798448114887106,
+                "econ": 0.28272585133757033,
+                "items": 0.6712875751513918,
+                "augments": -0.0,
+                "meta2": 0.2462196547065894,
+                "econ2": 0.3709610248952887,
+                "items2": 0.8630105613583019,
+                "augments2": 0.16786896502531778,
+                "contestedRatio3": 1.17490517625139
+            }
+        }
     }
 ]
