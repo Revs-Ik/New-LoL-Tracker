@@ -161,7 +161,7 @@ class TwitterController:
                 if unit["rarity"] == 6 and unit["tier"] == 3:
                     maxxedLegendaryChamps.append(f'{unit["id"].split("_")[1]} ⭐⭐⭐')
                     
-            if difference > 0:
+            if difference > 0 and any(maxxedLegendaryChamps):
                 message += f'Abusando de {"\nY ".join(maxxedLegendaryChamps)}\n'
             
             # ADD WINSTRIAK
