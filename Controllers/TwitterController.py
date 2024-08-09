@@ -162,7 +162,7 @@ class TwitterController:
                     maxxedLegendaryChamps.append(f'{unit["id"].split("_")[1]} ⭐⭐⭐')
                     
             if difference > 0 and any(maxxedLegendaryChamps):
-                message += f'Abusando de {"\nY ".join(maxxedLegendaryChamps)}\n'
+                message += 'Abusando de ' + "\nY ".join(maxxedLegendaryChamps) + '\n'
             
             # ADD WINSTRIAK
             if winstreak > 1 and (difference > 0 or lost):
